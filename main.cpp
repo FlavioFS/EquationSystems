@@ -1,12 +1,13 @@
 #include <iostream>
 #include "EquationSystem.h"
 #include "Gauss.h"
+#include "lu.h"
 
 using namespace std;
 
 int main()
 {
-    double A[9] =
+    double A[] =
     {
         3, 2,  4,
         1, 1,  2,
@@ -15,10 +16,13 @@ int main()
 
     double B[] = {1, 2, 3};
 
-    Gauss e (A, B, 3);
+    EquationSystem s1 (A, B, 3, false, true);
+    //EquationSystem m;
+
     //e.run();
-    //e.showA();
-    //e.showB();
+    s1.showA();
+    s1.showB();
+    s1.showX();
 
     return 0;
 }

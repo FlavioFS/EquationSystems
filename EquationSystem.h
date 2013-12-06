@@ -31,7 +31,7 @@ public:
 	// Prints
 	void showA();
 	void showB();
-	void showX();
+    void showX();
 
 	// Solve system
     virtual void run() = 0;
@@ -44,7 +44,7 @@ protected:
 
 	// A*X = B
 	double
-		**A,	// Coeficients
+        **A,	// Coeficients
          *B,	// Constants vector
          *X;	// Solution
 	
@@ -54,6 +54,10 @@ protected:
 	bool
 		printable,
 		pivoting;
+
+private:
+    void setX(double X[]);
+    void clearX();
 };
 
 #endif

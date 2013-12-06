@@ -16,8 +16,7 @@ EquationSystem::~EquationSystem()
 {
 	clearA();
 	clearB();
-
-	delete (this);
+    clearX();
 }
 
 /* C++ does not support calling constructors inside a
@@ -28,28 +27,17 @@ void EquationSystem::genericConstructor(double A[], double B[], int size, bool p
 {
 	try
 	{
-		// Defined in the "Clears" section below
-        clearA();
-        clearB();
-
-		// New dynamic matrix to A
-        this->A = new double* [size];
-		for (int i = 0; i < size; i++)
-            this->A[i] = new double [size];
-
-		// New dynamic vector to B
-        this->B = new double [size];
-
 		// Attribution
-		setA(A);
+        setSize(size);
+        setA(A);
 		setB(B);
-		setSize(size);
+
 	}
 	catch (...)
 	{
+        setSize(0);
 		setA(NULL);
 		setB(NULL);
-		setSize(0);
 	};
 
 	// Pivoting and Print Calculations
@@ -63,14 +51,22 @@ void EquationSystem::genericConstructor(double A[], double B[], int size, bool p
 // Sets matrix A in this A*X = B system
 void EquationSystem::setA(double A[])
 {
-    if (A == NULL)
-    {
-        this->A = NULL;
-        return;
-    }
-
     try
     {
+        clearA();
+
+        // NULL case
+        if (A == NULL)
+        {
+            this->A = NULL;
+            return;
+        }
+
+        // New dynamic matrix to A
+        this->A = new double* [size];
+        for (int i = 0; i < size; i++)
+            this->A[i] = new double [size];
+
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -83,18 +79,47 @@ void EquationSystem::setA(double A[])
 // Sets matrix B in this A*X = B system
 void EquationSystem::setB(double B[])
 {
-    if (B == NULL)
-    {
-        this->B = NULL;
-        return;
-    }
-
     try
     {
+        clearB();
+
+        // NULL case
+        if (B == NULL)
+        {
+            this->B = NULL;
+            return;
+        }
+
+        // New dynamic vector to B
+        this->B = new double [size];
+
         for (int i = 0; i < size; i++)
             this->B[i] = B[i];
     }
     catch(...) { printf("Error: invalid B (constants vector).\n"); };
+}
+
+// Sets matrix X in this A*X = B system
+void EquationSystem::setX(double X[])
+{
+    try
+    {
+        clearX();
+
+        // NULL case
+        if (X == NULL)
+        {
+            this->X = NULL;
+            return;
+        }
+
+        // New dynamic vector to B
+        this->X = new double [size];
+
+        for (int i = 0; i < size; i++)
+            this->X[i] = X[i];
+    }
+    catch(...) { printf("Error: invalid X (solutions).\n"); };
 }
 
 /* Sets the size of A, B and X. Sets the n in:
@@ -143,52 +168,76 @@ void EquationSystem::clearB()
 		delete (B);
 }
 
+// Deletes the dynamic value assigned to X.
+void EquationSystem::clearX()
+{
+    if (X != NULL)
+        delete (X);
+}
+
 /* ==============================================================
- *                 			 Show				               *
+ *                 			   Show				               *
 ============================================================== */
 void EquationSystem::showA()
 {
     if (A == NULL)
+    {
+        printf("A is NULL\n");
         return;
+    }
 
-	// Row Indexes in the first line
-	printf("  ");
-	for (int i = 0; i < size; i++)
-	{
-		printf ("  [%4d]  \t", i+1);
-	}
-	printf("\n");
+    // Row Indexes in the first line
+    printf("================ A =================\n"
+           "       ");
+    for (int i = 0; i < size; i++)
+    {
+        printf ("   %4d     ", i+1);
+    }
+    printf("\n");
 
-	// Line indexes and A values
-	for (int i = 0; i < size; i++)
-	{
-		printf("[%4d] ", i);
-		for (int j = 0; j < size; j++)
-		{
-			printf
-			(
-				"%10.6lf\t", A[i][j]
-			);
-		}
-		printf("\n");
-	}
+    // Line indexes and A values
+    for (int i = 0; i < size; i++)
+    {
+        printf("%4d|", i);
+        for (int j = 0; j < size; j++)
+        {
+            printf
+            (
+                "  %10lf", A[i][j]
+            );
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
 
 void EquationSystem::showB()
 {
     if (B == NULL)
+    {
+        printf("B is NULL\n");
         return;
+    }
 
+    printf("================ B =================\n");
 	for (int i = 0; i < size; i++)
 	{
-		printf("[%4d]\t%10.6lf\n", i, B[i]);
+        printf("%4d|  %10lf\n", i, B[i]);
 	}
+    printf("\n");
 }
 
 void EquationSystem::showX()
 {
+    if (X == NULL)
+    {
+        printf("X is NULL\n");
+        return;
+    }
+
 	for (int i = 0; i < size; i++)
 	{
 		printf("[%4d]\t%10.6lf\n", i, X[i]);
 	}
+    printf("\n");
 }

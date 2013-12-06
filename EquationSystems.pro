@@ -3,10 +3,10 @@ CONFIG += console
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    Gauss.cpp \
-    EquationSystem.cpp
+    EquationSystem.cpp \
+    lu.cpp
 
 HEADERS += \
-    Gauss.h \
-    EquationSystem.h
+    EquationSystem.h \
+    lu.h
 
