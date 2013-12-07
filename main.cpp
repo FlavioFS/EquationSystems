@@ -22,7 +22,8 @@ int main()
     //e.run();
     s1.showA();
     s1.showB();
-    s1.showX();
+    //s1.showX();
+    s1.showP();
 
     return 0;
 }

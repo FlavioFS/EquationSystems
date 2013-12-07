@@ -32,32 +32,40 @@ public:
 	void showA();
 	void showB();
     void showX();
+    void showP();
 
 	// Solve system
-    virtual void run() = 0;
+    //virtual void run() = 0;
 
 protected:
     void genericConstructor(double A[], double B[], int size, bool pivoting, bool printable);
 
+    // Façade sets
+    void setP(int X[]);
+    void setX(double X[]);
+
+    // Clears
 	void clearA();
 	void clearB();
+    void clearX();
+    void clearP();
+
+    // Pivoting
+    void resetP();
 
 	// A*X = B
 	double
-        **A,	// Coeficients
+        **A,    // Coeficients
          *B,	// Constants vector
          *X;	// Solution
 	
 	int
-		size; 	// Order of the system (number or equations)
+        size, 	// Order of the system (number or equations)
+         **P;   // Pivoting matrix
 
 	bool
 		printable,
 		pivoting;
-
-private:
-    void setX(double X[]);
-    void clearX();
 };
 
 #endif
