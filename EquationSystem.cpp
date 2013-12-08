@@ -27,9 +27,10 @@ EquationSystem::~EquationSystem()
 void EquationSystem::genericConstructor(double A[], double B[], int size, bool pivoting, bool printable)
 {
     setSize(0);
-    setA(NULL);
-    setB(NULL);
-    setP(NULL);
+    this->A = NULL;
+    this->B = NULL;
+    this->P = NULL;
+    this->X = NULL;
 
 	try
 	{
@@ -187,6 +188,7 @@ void EquationSystem::clearA()
             delete (A[i]);
 
         delete (A);
+        A = NULL;
 	}
 }
 
@@ -194,14 +196,20 @@ void EquationSystem::clearA()
 void EquationSystem::clearB()
 {
 	if (B != NULL)
-		delete (B);
+    {
+        delete (B);
+        B = NULL;
+    }
 }
 
 // Deletes the dynamic value assigned to X.
 void EquationSystem::clearX()
 {
     if (X != NULL)
+    {
         delete (X);
+        X = NULL;
+    }
 }
 
 // Loads identity to pivoting matrix P (Façade).
@@ -214,6 +222,7 @@ void EquationSystem::clearP()
             delete (P[i]);
 
         delete (P);
+        P = NULL;
     }
 }
 
@@ -222,9 +231,10 @@ void EquationSystem::clearP()
 ============================================================== */
 void EquationSystem::showA()
 {
+    // Null case
     if (A == NULL)
     {
-        printf("A is NULL\n");
+        printf("A is NULL\n\n");
         return;
     }
 
@@ -235,6 +245,8 @@ void EquationSystem::showA()
     {
         printf ("   %4d     ", i+1);
     }
+
+    // Horizontal line
     printf("\n"
            "     ");
     for (int i = 0; i < size; i++)
@@ -243,7 +255,7 @@ void EquationSystem::showA()
     }
     printf("\n");
 
-    // Line indexes and A values
+    // Lines indexes and A values
     for (int i = 0; i < size; i++)
     {
         printf("%4d|", i);
@@ -261,15 +273,18 @@ void EquationSystem::showA()
 
 void EquationSystem::showB()
 {
+    // Null case
     if (B == NULL)
     {
-        printf("B is NULL\n");
+        printf("B is NULL\n\n");
         return;
     }
 
+    // Title and horizontal bar
     printf("================ B =================\n"
-           "     ______________\n");
+           "     ____________\n");
 
+    // Lines indexes and B values
     for (int i = 0; i < size; i++)
 	{
         printf("%4d|  %10lf\n", i, B[i]);
@@ -279,12 +294,14 @@ void EquationSystem::showB()
 
 void EquationSystem::showX()
 {
+    // Null case
     if (X == NULL)
     {
-        printf("X is NULL\n");
+        printf("X is NULL\n\n");
         return;
     }
 
+    // Lines indexes and X values
 	for (int i = 0; i < size; i++)
 	{
 		printf("[%4d]\t%10.6lf\n", i, X[i]);
@@ -294,19 +311,22 @@ void EquationSystem::showX()
 
 void EquationSystem::showP()
 {
+    // Null case
     if (P == NULL)
     {
-        printf("P is NULL\n");
+        printf("P is NULL\n\n");
         return;
     }
 
     // Row Indexes in the first line
     printf("================ P =================\n"
-           "    ");
+           "     ");
     for (int i = 0; i < size; i++)
     {
-        printf ("  %4d", i+1);
+        printf ("  %04d", i+1);
     }
+
+    // Horizontal bar
     printf("\n"
            "     ");
     for (int i = 0; i < size; i++)
@@ -318,10 +338,10 @@ void EquationSystem::showP()
     // Line indexes and P values
     for (int i = 0; i < size; i++)
     {
-        printf("%4d|  ", i);
+        printf("%4d|", i);
         for (int j = 0; j < size; j++)
         {
-            printf ("  %1d   ", P[i][j]);
+            printf ("     %1d", P[i][j]);
         }
         printf("\n");
     }

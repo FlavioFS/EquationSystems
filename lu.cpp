@@ -16,8 +16,8 @@ LU::~LU()
 {
     this->clearA();
     this->clearB();
-
-    delete(this);
+    this->clearP();
+    this->clearX();
 }
 
 /* ==============================================================
@@ -25,6 +25,8 @@ LU::~LU()
 ============================================================== */
 void LU::run()
 {
+    // Copy from Gauss.h. Next step: modify it.
+    /*
     bool invalid = false;
 
     if (A == NULL)
@@ -55,5 +57,5 @@ void LU::run()
             B[i] -= ratio*B[step];
         }
     }
-
+    */
 }
