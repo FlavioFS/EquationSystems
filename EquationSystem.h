@@ -50,8 +50,9 @@ protected:
     void clearX();
     void clearP();
 
-    // Pivoting
+    // Resets
     void resetP();
+    void resetX();
 
 	// A*X = B
 	double

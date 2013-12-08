@@ -1,6 +1,5 @@
 #include <iostream>
 #include "EquationSystem.h"
-#include "Gauss.h"
 #include "lu.h"
 
 using namespace std;
@@ -11,7 +10,8 @@ int main()
     {
         3, 2,  4, 1,
         1, 1,  2, 1,
-        4, 3, -2, 1
+        4, 3, -2, 1,
+        5, 7,  9, 4
     };
 
     double B[] = {1, 2, 3, 1};

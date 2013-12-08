@@ -44,6 +44,7 @@ void EquationSystem::genericConstructor(double A[], double B[], int size, bool p
 	// Pivoting and Print Calculations
 	setPivoting(pivoting);
 	setPrintCalcs(printable);
+    resetX();
     resetP();
 }
 
@@ -240,32 +241,26 @@ void EquationSystem::showA()
 
     // Row Indexes in the first line
     printf("================ A =================\n"
-           "       ");
+           "     ");
     for (int i = 0; i < size; i++)
-    {
-        printf ("   %4d     ", i+1);
-    }
+        printf ("    %4d    ", i+1);
 
     // Horizontal line
     printf("\n"
            "     ");
+
     for (int i = 0; i < size; i++)
-    {
         printf ("____________");
-    }
+
     printf("\n");
 
     // Lines indexes and A values
     for (int i = 0; i < size; i++)
     {
-        printf("%4d|", i);
+        printf("%4d|", i+1);
         for (int j = 0; j < size; j++)
-        {
-            printf
-            (
-                "  %10lf", A[i][j]
-            );
-        }
+            printf ("  %10lf", A[i][j]);
+
         printf("\n");
     }
     printf("\n");
@@ -286,9 +281,8 @@ void EquationSystem::showB()
 
     // Lines indexes and B values
     for (int i = 0; i < size; i++)
-	{
-        printf("%4d|  %10lf\n", i, B[i]);
-	}
+        printf("%4d|  %10lf\n", i+1, B[i]);
+
     printf("\n");
 }
 
@@ -301,11 +295,14 @@ void EquationSystem::showX()
         return;
     }
 
-    // Lines indexes and X values
-	for (int i = 0; i < size; i++)
-	{
-		printf("[%4d]\t%10.6lf\n", i, X[i]);
-	}
+    // Title and horizontal bar
+    printf("================ X =================\n"
+           "     ____________\n");
+
+    // Lines indexes and B values
+    for (int i = 0; i < size; i++)
+        printf("%4d|  %10lf\n", i+1, X[i]);
+
     printf("\n");
 }
 
@@ -322,27 +319,23 @@ void EquationSystem::showP()
     printf("================ P =================\n"
            "     ");
     for (int i = 0; i < size; i++)
-    {
-        printf ("  %04d", i+1);
-    }
+        printf ("  %4d", i+1);
 
     // Horizontal bar
     printf("\n"
            "     ");
     for (int i = 0; i < size; i++)
-    {
         printf ("______");
-    }
+
     printf("\n");
 
     // Line indexes and P values
     for (int i = 0; i < size; i++)
     {
-        printf("%4d|", i);
+        printf("%4d|", i+1);
         for (int j = 0; j < size; j++)
-        {
             printf ("     %1d", P[i][j]);
-        }
+
         printf("\n");
     }
     printf("\n");
@@ -351,6 +344,18 @@ void EquationSystem::showP()
 /* ==============================================================
  *                 			 Pivoting			               *
 ============================================================== */
+void EquationSystem::resetX()
+{
+    clearX();
+
+    // Instantiating new vector with 0's into X
+    this->X = new double [size];
+
+    // Setting Identity to P
+    for (int i = 0; i < size; i++)
+        X[i] = 0;
+}
+
 void EquationSystem::resetP()
 {
     clearP();
