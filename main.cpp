@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "EquationSystem.h"
 #include "lu.h"
 
@@ -25,5 +26,6 @@ int main()
     s1.showX();
     s1.showP();
 
+    system("PAUSE");
     return 0;
 }

@@ -1,7 +1,7 @@
 #ifndef EQUATIONSYSTEM_H
 #define EQUATIONSYSTEM_H
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 
 /* Solves a system A*X = B, where:
