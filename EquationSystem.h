@@ -45,14 +45,22 @@ protected:
     void setX(double X[]);
 
     // Clears
-	void clearA();
-	void clearB();
-    void clearX();
-    void clearP();
+    bool clearA();
+    bool clearB();
+    bool clearX();
+    bool clearP();
 
     // Resets
     void resetP();
     void resetX();
+
+    // Pivoting - Overloaded method
+    void swapLines(double **M, int i1, int i2);
+    void swapLines(int    **M, int i1, int i2);
+    void swapLines(double  *M, int i1, int i2);
+    void swapLines(int     *M, int i1, int i2);
+
+    int findMax(double **M, int j);
 
 	// A*X = B
 	double
@@ -65,8 +73,8 @@ protected:
          **P;   // Pivoting matrix
 
 	bool
-		printable,
-		pivoting;
+        printable,  // Toggles visibility of method private calculations
+        pivoting;   // Toggles pivoting (better results, but slower)
 };
 
 #endif
