@@ -16,7 +16,7 @@ int main()
 
     double B[] = {16, 38, 38};
 
-    LU s1 (A, B, 3, false, true);
+    LU s1 (A, B, 3, true, true);
     s1.run();
     s1.showY();
     s1.showX();

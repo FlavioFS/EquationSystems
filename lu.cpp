@@ -115,7 +115,7 @@ void LU::calcLU()
         {
             int max = findMax(A, step, step);
             swapLines(A, step, max);
-            getchar();
+            printf("Swap! %d(step) <-> %d (max)\n", step, max);
         }
 
         // Calculating U

@@ -475,6 +475,9 @@ void EquationSystem::swapLines(double **M, int i1, int i2)
     if (error)
         return;
 
+    if (i1 == i2)
+        return;
+
     try
     {
         for (int j = 0; j < size; j++)
@@ -510,6 +513,9 @@ void EquationSystem::swapLines(int **M, int i1, int i2)
     }
 
     if (error)
+        return;
+
+    if (i1 == i2)
         return;
 
     try
@@ -549,6 +555,9 @@ void EquationSystem::swapLines(double *M, int i1, int i2)
     if (error)
         return;
 
+    if (i1 == i2)
+        return;
+
     try
     {
         double temp = M[i1];
@@ -581,6 +590,9 @@ void EquationSystem::swapLines(int *M, int i1, int i2)
     }
 
     if (error)
+        return;
+
+    if (i1 == i2)
         return;
 
     try
@@ -617,13 +629,13 @@ int EquationSystem::findMax(double **M, int min, int j)
 
     try
     {
-        double maxV = M[0][j];
+        double maxV = abs(M[0][j]);
         int maxI = 0;
         for (int i = min; i < size; i++)
         {
-            if (M[i][j] > maxV || M[i][j] != 0)
+            if (abs(M[i][j]) > maxV && M[i][j] != 0)
             {
-                maxV = M[i][j];
+                maxV = abs(M[i][j]);
                 maxI = i;
             }
         }
@@ -685,4 +697,14 @@ void EquationSystem::pivotX()
     }
     catch(...)
         { printf("Error in pivotX(): Invalid element in P\n"); }
+}
+
+/* ==============================================================
+ *                 			  Utility			               *
+============================================================== */
+double EquationSystem::abs(double x)
+{
+    if (x < 0)
+        return -x;
+    return x;
 }

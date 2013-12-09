@@ -38,6 +38,9 @@ public:
 	// Solve system
     virtual void run() = 0;
 
+    // Utility
+    double abs(double x);
+
 protected:
     void genericConstructor(double A[], double B[], int size, double error, bool pivoting, bool printable);
 
