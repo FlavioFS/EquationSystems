@@ -61,7 +61,7 @@ protected:
     void swapLines(double  *M, int i1, int i2);
     void swapLines(int     *M, int i1, int i2);
 
-    int findMax(double **M, int j);
+    int findMax(double **M, int min, int j);
     void pivotX();
 
 	// A*X = B

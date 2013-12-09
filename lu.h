@@ -24,6 +24,10 @@ protected:
     void genericConstructor(double A[], double B[], int size, bool pivoting, bool printable);
 
 private:
+    // Sets
+    void setA(double A[]);
+    void setChangedA(bool changedA);
+
     // Clears
     bool clearL();
     bool clearU();
@@ -34,10 +38,17 @@ private:
     void resetU();
     void resetY();
 
+    // Calculations
+    void calcLU();
+    void applyLU();
+
     double
         **L, // Lower Matrix
         **U, // Upper Matrix
          *Y; // Half-way solution vector
+
+    bool
+        changedA;   // Has the value of A changed?
 };
 
 #endif // LU_H

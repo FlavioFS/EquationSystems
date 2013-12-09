@@ -56,8 +56,22 @@ void LU::genericConstructor(double A[], double B[], int size, bool pivoting, boo
 }
 
 /* ==============================================================
+ *                             Sets     					   *
+============================================================== */
+// Overriding base class' setA()
+void LU::setA(double A[])
+{
+    EquationSystem::setA(A);
+    this->setChangedA(true);
+}
+
+void LU::setChangedA(bool changedA)
+    { this->changedA = changedA; }
+
+/* ==============================================================
  *                 		Solving the system                     *
 ============================================================== */
+// Solves the system to the given B
 void LU::run()
 {
     // Copy from Gauss.h. Next step: modify it.
@@ -83,29 +97,58 @@ void LU::run()
 
     if(invalid) return;
 
-    resetL();
-    resetU();
     resetX();
     resetY();
+
+    calcLU();
+}
+
+// Calculates L and U. They are not re-calculated when B changes.
+void LU::calcLU()
+{
+    resetL();
+    resetU();
 
     for (int step = 0; step < size; step++)
     {
         if (pivoting)
         {
-            int max = findMax(A, step);
+            int max = findMax(A, step, step);
             swapLines(A, step, max);
+            getchar();
         }
 
+        // Calculating U
+        for (int j = step; j < size; j++)
+            U[step][j] = A[step][j];
+
+        // Calculating L
         for (int i = step+1; i < size; i++)
         {
             double ratio = A[i][step]/A[step][step];
+            L[i][step] = ratio;
 
             for (int j = step; j < size; j++)
                 A[i][j] -= ratio*A[step][j];
+        }
 
-            B[i] -= ratio*B[step];
+        if (printable)
+        {
+            printf("----->> STEP: %d <<-----\n", step);
+            showA();
+            showL();
+            showU();
+            printf("\n\n");
         }
     }
+
+    setChangedA(false);
+}
+
+// Applies already calculated L and U to B.
+void LU::applyLU()
+{
+
 }
 
 /* ==============================================================
@@ -287,7 +330,12 @@ void LU::resetL()
     // Setting Identity to L
     for (int i = 0; i < size; i++)
         for (int j = 0; j < size; j++)
-            this->L[i][j] = 0;
+        {
+            if (i == j)
+                this->L[i][j] = 1;
+            else
+                this->L[i][j] = 0;
+        }
 }
 
 // Sets 0 to all of U's elements
@@ -300,7 +348,7 @@ void LU::resetU()
     for (int i = 0; i < size; i++)
         this->U[i] = new double [size];
 
-    // Setting Identity to U
+    // Setting O to U
     for (int i = 0; i < size; i++)
         for (int j = 0; j < size; j++)
             this->U[i][j] = 0;
@@ -318,3 +366,5 @@ void LU::resetY()
     for (int i = 0; i < size; i++)
         Y[i] = 0;
 }
+
+

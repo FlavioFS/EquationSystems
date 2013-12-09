@@ -51,7 +51,7 @@ void EquationSystem::genericConstructor(double A[], double B[], int size, double
 }
 
 /* ==============================================================
- *                          Sets and Gets					   *
+ *                             Sets     					   *
 ============================================================== */
 // Sets matrix A in this A*X = B system
 void EquationSystem::setA(double A[])
@@ -594,7 +594,7 @@ void EquationSystem::swapLines(int *M, int i1, int i2)
 }
 
 // Finds the position of the biggest element in the row j of matrix M
-int EquationSystem::findMax(double **M, int j)
+int EquationSystem::findMax(double **M, int min, int j)
 {
     bool error = false;
 
@@ -619,9 +619,9 @@ int EquationSystem::findMax(double **M, int j)
     {
         double maxV = M[0][j];
         int maxI = 0;
-        for (int i = 1; i < size; i++)
+        for (int i = min; i < size; i++)
         {
-            if (M[i][j] > maxV)
+            if (M[i][j] > maxV || M[i][j] != 0)
             {
                 maxV = M[i][j];
                 maxI = i;

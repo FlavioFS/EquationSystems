@@ -9,18 +9,16 @@ int main()
 {
     double A[] =
     {
-        11, 12,  13, 14,
-        21, 22,  23, 24,
-        31, 32,  33, 34,
-        41, 42,  43, 44
+        20, 7, 9,
+        7, 30, 8,
+        9, 8, 30
     };
 
-    double B[] = {1, 2, 3, 4};
+    double B[] = {16, 38, 38};
 
-    LU s1 (A, B, 4, false, true);
+    LU s1 (A, B, 3, false, true);
     //EquationSystem m;
     s1.run();
-    s1.showA();
     s1.showB();
     s1.showX();
     s1.showL();
