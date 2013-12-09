@@ -4,13 +4,13 @@
  *                 Constructors and Destructor				   *
 ============================================================== */
 EquationSystem::EquationSystem()
-    { this->genericConstructor(NULL, NULL, 0, false, false); }
+    { this->genericConstructor(NULL, NULL, 0, 0.000001, false, false); }
 
-EquationSystem::EquationSystem(double A[], double B[], int size)
-    { this->genericConstructor(A, B, size, false, true); }
+EquationSystem::EquationSystem(double A[], double B[], int size, double error)
+    { this->genericConstructor(A, B, size, error, false, true); }
 
-EquationSystem::EquationSystem(double A[], double B[], int size, bool pivoting, bool printable)
-    { this->genericConstructor(A, B, size, pivoting, printable); }
+EquationSystem::EquationSystem(double A[], double B[], int size, double error, bool pivoting, bool printable)
+    { this->genericConstructor(A, B, size, error, pivoting, printable); }
 
 EquationSystem::~EquationSystem()
 {
@@ -24,7 +24,7 @@ EquationSystem::~EquationSystem()
  * constructor. This function encapsulates the construction
  * process.
  */
-void EquationSystem::genericConstructor(double A[], double B[], int size, bool pivoting, bool printable)
+void EquationSystem::genericConstructor(double A[], double B[], int size, double error, bool pivoting, bool printable)
 {
     setSize(0);
     this->A = NULL;
@@ -34,6 +34,7 @@ void EquationSystem::genericConstructor(double A[], double B[], int size, bool p
 
     // Attribution
     setSize(size);
+    setError(error);
     setA(A);
     setB(B);
 
@@ -183,6 +184,15 @@ void EquationSystem::setSize(int size)
 {
 	if (size >= 0)
 		this->size = size;
+}
+
+// Sets the maximum allowed value of error (epsilon)
+void EquationSystem::setError(double error)
+{
+    if (error < 0)
+        error = -error;
+
+    this->error = error;
 }
 
 /* Turns on/off the view of intermediate calculations in the

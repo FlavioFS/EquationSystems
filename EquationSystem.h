@@ -15,8 +15,8 @@ class EquationSystem
 public:
 	// Constructors
 	EquationSystem();
-    EquationSystem(double A[], double B[], int size);
-    EquationSystem(double A[], double B[], int size, bool pivoting, bool printable);
+    EquationSystem(double A[], double B[], int size, double error);
+    EquationSystem(double A[], double B[], int size, double error, bool pivoting, bool printable);
 
 	// Destructor
     ~EquationSystem();
@@ -25,6 +25,7 @@ public:
     void setA(double A[]);
     void setB(double B[]);
     void setSize(int size);
+    void setError(double error);
 	void setPrintCalcs(bool printable);
 	void setPivoting(bool pivoting);
 
@@ -35,10 +36,10 @@ public:
     void showP();
 
 	// Solve system
-    //virtual void run() = 0;
+    virtual void run() = 0;
 
 protected:
-    void genericConstructor(double A[], double B[], int size, bool pivoting, bool printable);
+    void genericConstructor(double A[], double B[], int size, double error, bool pivoting, bool printable);
 
     // Façade sets
     void setP(int X[]);
@@ -72,6 +73,9 @@ protected:
 	int
         size, 	// Order of the system (number or equations)
          **P;   // Pivoting matrix
+
+    double
+        error;  // Error (epsilon)
 
 	bool
         printable,  // Toggles visibility of method private calculations

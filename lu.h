@@ -14,26 +14,30 @@ public:
     // Prints
     void showL();
     void showU();
-
-protected:
-    void genericConstructor(double A[], double B[], int size, bool pivoting, bool printable);
+    void showY();
 
     // Solves the system
     // (Virtual method inherited from EquationSystem)
     void run();
 
+protected:
+    void genericConstructor(double A[], double B[], int size, bool pivoting, bool printable);
+
 private:
     // Clears
     bool clearL();
     bool clearU();
+    bool clearY();
 
     // Resets
     void resetL();
     void resetU();
+    void resetY();
 
     double
         **L, // Lower Matrix
-        **U; // Upper Matrix
+        **U, // Upper Matrix
+         *Y; // Half-way solution vector
 };
 
 #endif // LU_H

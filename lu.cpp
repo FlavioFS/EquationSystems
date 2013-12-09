@@ -61,7 +61,6 @@ void LU::genericConstructor(double A[], double B[], int size, bool pivoting, boo
 void LU::run()
 {
     // Copy from Gauss.h. Next step: modify it.
-    /*
     bool invalid = false;
 
     if (A == NULL)
@@ -76,10 +75,27 @@ void LU::run()
         invalid = true;
     }
 
+    if (size == 0)
+    {
+        printf("Error in run(): size = 0\n");
+        invalid = true;
+    }
+
     if(invalid) return;
+
+    resetL();
+    resetU();
+    resetX();
+    resetY();
 
     for (int step = 0; step < size; step++)
     {
+        if (pivoting)
+        {
+            int max = findMax(A, step);
+            swapLines(A, step, max);
+        }
+
         for (int i = step+1; i < size; i++)
         {
             double ratio = A[i][step]/A[step][step];
@@ -90,7 +106,6 @@ void LU::run()
             B[i] -= ratio*B[step];
         }
     }
-    */
 }
 
 /* ==============================================================
@@ -168,6 +183,26 @@ void LU::showU()
     printf("\n");
 }
 
+void LU::showY()
+{
+    // Null case
+    if (Y == NULL)
+    {
+        printf("Y is NULL\n\n");
+        return;
+    }
+
+    // Title and horizontal bar
+    printf("================ Y =================\n"
+           "     ____________\n");
+
+    // Lines indexes and B values
+    for (int i = 0; i < size; i++)
+        printf("%4d|  %10lf\n", i+1, Y[i]);
+
+    printf("\n");
+}
+
 /* ==============================================================
  *                            Clear                            *
 ============================================================== */
@@ -217,6 +252,25 @@ bool LU::clearU()
     return true;
 }
 
+// Deletes the dynamic value assigned to half-solution vector
+bool LU::clearY()
+{
+    if (Y != NULL)
+    {
+        // Size 0
+        if (size == 0)
+        {
+            printf("Error in clearY(): size = 0.\n");
+            return false;
+        }
+
+        delete (Y);
+        Y = NULL;
+    }
+
+    return true;
+}
+
 /* ==============================================================
  *                             Reset                           *
 ============================================================== */
@@ -252,24 +306,15 @@ void LU::resetU()
             this->U[i][j] = 0;
 }
 
+// Sets 0 to all of Y's elements
+void LU::resetY()
+{
+    clearY();
 
+    // Instantiating new vector with 0's into Y
+    this->Y = new double [size];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Setting Identity to P
+    for (int i = 0; i < size; i++)
+        Y[i] = 0;
+}
