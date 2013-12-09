@@ -18,6 +18,41 @@ LU::~LU()
     this->clearB();
     this->clearP();
     this->clearX();
+    this->clearL();
+    this->clearU();
+}
+
+void LU::genericConstructor(double A[], double B[], int size, bool pivoting, bool printable)
+{
+    setSize(0);
+
+    // Cleaning pointers
+    this->A = NULL;
+    this->B = NULL;
+    this->P = NULL;
+    this->X = NULL;
+    this->L = NULL;
+    this->U = NULL;
+
+    // Attribution
+    setSize(size);
+    setA(A);
+    setB(B);
+
+    // Pivoting and Print Calculations
+    setPivoting(pivoting);
+    setPrintCalcs(printable);
+
+    /* Reseting matrices
+     * X = O
+     * P = I
+     * L = O
+     * U = O
+    */
+    resetX();
+    resetP();
+    resetL();
+    resetU();
 }
 
 /* ==============================================================
@@ -31,17 +66,15 @@ void LU::run()
 
     if (A == NULL)
     {
-        printf("Error: A is NULL\n");
+        printf("Error in run(): A is NULL\n");
         invalid = true;
     }
 
     if (B == NULL)
     {
-        printf("Error: B is NULL\n");
+        printf("Error in run(): B is NULL\n");
         invalid = true;
     }
-
-    if (pivoting) return;
 
     if(invalid) return;
 
@@ -59,3 +92,184 @@ void LU::run()
     }
     */
 }
+
+/* ==============================================================
+ *                 			   Show				               *
+============================================================== */
+void LU::showL()
+{
+    // Null case
+    if (L == NULL)
+    {
+        printf("L is NULL\n\n");
+        return;
+    }
+
+    // Row Indexes in the first line
+    printf("================ L =================\n"
+           "     ");
+    for (int i = 0; i < size; i++)
+        printf ("    %4d    ", i+1);
+
+    // Horizontal line
+    printf("\n"
+           "     ");
+
+    for (int i = 0; i < size; i++)
+        printf ("____________");
+
+    printf("\n");
+
+    // Lines indexes and L values
+    for (int i = 0; i < size; i++)
+    {
+        printf("%4d|", i+1);
+        for (int j = 0; j < size; j++)
+            printf ("  %10lf", L[i][j]);
+
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void LU::showU()
+{
+    // Null case
+    if (U == NULL)
+    {
+        printf("U is NULL\n\n");
+        return;
+    }
+
+    // Row Indexes in the first line
+    printf("================ U =================\n"
+           "     ");
+    for (int i = 0; i < size; i++)
+        printf ("    %4d    ", i+1);
+
+    // Horizontal line
+    printf("\n"
+           "     ");
+
+    for (int i = 0; i < size; i++)
+        printf ("____________");
+
+    printf("\n");
+
+    // Lines indexes and U values
+    for (int i = 0; i < size; i++)
+    {
+        printf("%4d|", i+1);
+        for (int j = 0; j < size; j++)
+            printf ("  %10lf", U[i][j]);
+
+        printf("\n");
+    }
+    printf("\n");
+}
+
+/* ==============================================================
+ *                            Clear                            *
+============================================================== */
+// Deletes all dynamic values assigned to Lower matrix.
+bool LU::clearL()
+{
+    if (L != NULL)
+    {
+        // Size 0
+        if (size == 0)
+        {
+            printf("Error in clearL(): size = 0.\n");
+            return false;
+        }
+
+        // Erasing each array in L
+        for (int i = 0; i < size; i++)
+            delete (L[i]);
+
+        delete (L);
+        L = NULL;
+    }
+
+    return true;
+}
+
+// Deletes all dynamic values assigned to Upper matrix.
+bool LU::clearU()
+{
+    if (U != NULL)
+    {
+        // Size 0
+        if (size == 0)
+        {
+            printf("Error in clearU(): size = 0.\n");
+            return false;
+        }
+
+        // Erasing each array in U
+        for (int i = 0; i < size; i++)
+            delete (U[i]);
+
+        delete (U);
+        U = NULL;
+    }
+
+    return true;
+}
+
+/* ==============================================================
+ *                             Reset                           *
+============================================================== */
+// Sets 0 to all of L's elements
+void LU::resetL()
+{
+    clearL();
+
+    // Instantiating new double matrix into L
+    this->L = new double* [size];
+    for (int i = 0; i < size; i++)
+        this->L[i] = new double [size];
+
+    // Setting Identity to L
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            this->L[i][j] = 0;
+}
+
+// Sets 0 to all of U's elements
+void LU::resetU()
+{
+    clearU();
+
+    // Instantiating new double matrix into U
+    this->U = new double* [size];
+    for (int i = 0; i < size; i++)
+        this->U[i] = new double [size];
+
+    // Setting Identity to U
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            this->U[i][j] = 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -29,7 +29,7 @@ public:
 	void setPivoting(bool pivoting);
 
 	// Prints
-	void showA();
+    void showA();
 	void showB();
     void showX();
     void showP();
@@ -61,6 +61,7 @@ protected:
     void swapLines(int     *M, int i1, int i2);
 
     int findMax(double **M, int j);
+    void pivotX();
 
 	// A*X = B
 	double

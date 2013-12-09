@@ -25,6 +25,8 @@ int main()
     s1.showB();
     s1.showX();
     s1.showP();
+    s1.showL();
+    s1.showU();
 
     system("PAUSE");
     return 0;

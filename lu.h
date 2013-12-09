@@ -11,14 +11,25 @@ public:
     LU(double A[], double B[], int size, bool pivoting, bool printable);
     ~LU();
 
+    // Prints
+    void showL();
+    void showU();
+
 protected:
+    void genericConstructor(double A[], double B[], int size, bool pivoting, bool printable);
+
     // Solves the system
     // (Virtual method inherited from EquationSystem)
     void run();
 
 private:
-    void calcL();
-    void calcU();
+    // Clears
+    bool clearL();
+    bool clearU();
+
+    // Resets
+    void resetL();
+    void resetU();
 
     double
         **L, // Lower Matrix

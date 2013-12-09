@@ -40,6 +40,11 @@ void EquationSystem::genericConstructor(double A[], double B[], int size, bool p
 	// Pivoting and Print Calculations
 	setPivoting(pivoting);
 	setPrintCalcs(printable);
+
+    /* Reseting matrices
+     * X = O
+     * P = I
+    */
     resetX();
     resetP();
 }
@@ -193,93 +198,6 @@ void EquationSystem::setPivoting(bool pivoting)
 	{ this->pivoting = pivoting; }
 
 /* ==============================================================
- *                            Clear     					   *
-============================================================== */
-// Deletes all dynamic values assigned to coeficients matrix.
-bool EquationSystem::clearA()
-{
-    if (A != NULL)
-	{
-        // Size 0
-        if (size == 0)
-        {
-            printf("Error in clearA(): size = 0.\n");
-            return false;
-        }
-
-		// Erasing each array in A
-		for (int i = 0; i < size; i++)
-            delete (A[i]);
-
-        delete (A);
-        A = NULL;
-	}
-
-    return true;
-}
-
-// Deletes the dynamic value assigned to B.
-bool EquationSystem::clearB()
-{
-	if (B != NULL)
-    {
-        // Size 0
-        if (size == 0)
-        {
-            printf("Error in clearB(): size = 0.\n");
-            return false;
-        }
-
-        delete (B);
-        B = NULL;
-    }
-
-    return true;
-}
-
-// Deletes the dynamic value assigned to X.
-bool EquationSystem::clearX()
-{
-    if (X != NULL)
-    {
-        // Size 0
-        if (size == 0)
-        {
-            printf("Error in clearX(): size = 0.\n");
-            return false;
-        }
-
-        delete (X);
-        X = NULL;
-    }
-
-    return true;
-}
-
-// Loads identity to pivoting matrix P (Facade).
-bool EquationSystem::clearP()
-{
-    if (P != NULL)
-    {
-        // Size 0
-        if (size == 0)
-        {
-            printf("Error in clearP(): size = 0.\n");
-            return false;
-        }
-
-        // Erasing each array in P
-        for (int i = 0; i < size; i++)
-            delete (P[i]);
-
-        delete (P);
-        P = NULL;
-    }
-
-    return true;
-}
-
-/* ==============================================================
  *                 			   Show				               *
 ============================================================== */
 void EquationSystem::showA()
@@ -394,6 +312,93 @@ void EquationSystem::showP()
 }
 
 /* ==============================================================
+ *                            Clear     					   *
+============================================================== */
+// Deletes all dynamic values assigned to coeficients matrix.
+bool EquationSystem::clearA()
+{
+    if (A != NULL)
+	{
+        // Size 0
+        if (size == 0)
+        {
+            printf("Error in clearA(): size = 0.\n");
+            return false;
+        }
+
+		// Erasing each array in A
+		for (int i = 0; i < size; i++)
+            delete (A[i]);
+
+        delete (A);
+        A = NULL;
+	}
+
+    return true;
+}
+
+// Deletes the dynamic value assigned to B.
+bool EquationSystem::clearB()
+{
+	if (B != NULL)
+    {
+        // Size 0
+        if (size == 0)
+        {
+            printf("Error in clearB(): size = 0.\n");
+            return false;
+        }
+
+        delete (B);
+        B = NULL;
+    }
+
+    return true;
+}
+
+// Deletes the dynamic value assigned to X.
+bool EquationSystem::clearX()
+{
+    if (X != NULL)
+    {
+        // Size 0
+        if (size == 0)
+        {
+            printf("Error in clearX(): size = 0.\n");
+            return false;
+        }
+
+        delete (X);
+        X = NULL;
+    }
+
+    return true;
+}
+
+// Loads identity to pivoting matrix P (Facade).
+bool EquationSystem::clearP()
+{
+    if (P != NULL)
+    {
+        // Size 0
+        if (size == 0)
+        {
+            printf("Error in clearP(): size = 0.\n");
+            return false;
+        }
+
+        // Erasing each array in P
+        for (int i = 0; i < size; i++)
+            delete (P[i]);
+
+        delete (P);
+        P = NULL;
+    }
+
+    return true;
+}
+
+/* ==============================================================
  *                 			   Reset			               *
 ============================================================== */
 // Sets 0 to all of X's elements
@@ -414,7 +419,7 @@ void EquationSystem::resetP()
 {
     clearP();
 
-    // Instantiating new double matrix into P
+    // Instantiating new int matrix into P
     this->P = new int* [size];
     for (int i = 0; i < size; i++)
         this->P[i] = new int [size];
@@ -438,11 +443,13 @@ void EquationSystem::resetP()
 ============================================================== */
 void EquationSystem::swapLines(double **M, int i1, int i2)
 {
+    bool error = false;
+
     // Null case
     if (M == NULL)
     {
         printf("Error in swapLines(double **M, int i1, int i2): NULL matrix\n");
-        return;
+        error = true;
     }
 
     // Line < 0 or Line > size
@@ -452,8 +459,11 @@ void EquationSystem::swapLines(double **M, int i1, int i2)
         i2 > size)
     {
         printf("Error in swapLines(double **M, int i1, int i2): Line value error\n");
-        return;
+        error = true;
     }
+
+    if (error)
+        return;
 
     try
     {
@@ -470,11 +480,13 @@ void EquationSystem::swapLines(double **M, int i1, int i2)
 
 void EquationSystem::swapLines(int **M, int i1, int i2)
 {
+    bool error = false;
+
     // Null case
     if (M == NULL)
     {
         printf("Error in swapLines(int **M, int i1, int i2): NULL matrix\n");
-        return;
+        error = true;
     }
 
     // Line < 0 or Line > size
@@ -484,8 +496,11 @@ void EquationSystem::swapLines(int **M, int i1, int i2)
         i2 > size)
     {
         printf("Error in swapLines(int **M, int i1, int i2): Line value error\n");
-        return;
+        error = true;
     }
+
+    if (error)
+        return;
 
     try
     {
@@ -502,11 +517,13 @@ void EquationSystem::swapLines(int **M, int i1, int i2)
 
 void EquationSystem::swapLines(double *M, int i1, int i2)
 {
+    bool error = false;
+
     // Null case
     if (M == NULL)
     {
         printf("Error in swapLines(double *M, int i1, int i2): NULL matrix\n");
-        return;
+        error = true;
     }
 
     // Line < 0 or Line > size
@@ -516,8 +533,11 @@ void EquationSystem::swapLines(double *M, int i1, int i2)
         i2 > size)
     {
         printf("Error in swapLines(double *M, int i1, int i2): Line value error\n");
-        return;
+        error = true;
     }
+
+    if (error)
+        return;
 
     try
     {
@@ -525,16 +545,19 @@ void EquationSystem::swapLines(double *M, int i1, int i2)
         M[i1] = M[i2];
         M[i2] = temp;
     }
+    catch(...)
         { printf("Error in swapLines(double *M, int i1, int i2): Invalid Matrix\n"); }
 }
 
 void EquationSystem::swapLines(int *M, int i1, int i2)
 {
+    bool error = false;
+
     // Null case
     if (M == NULL)
     {
         printf("Error in swapLines(int *M, int i1, int i2): NULL matrix\n");
-        return;
+        error = true;
     }
 
     // Line < 0 or Line > size
@@ -544,8 +567,11 @@ void EquationSystem::swapLines(int *M, int i1, int i2)
         i2 > size)
     {
         printf("Error in swapLines(int *M, int i1, int i2): Line value error\n");
-        return;
+        error = true;
     }
+
+    if (error)
+        return;
 
     try
     {
@@ -553,25 +579,31 @@ void EquationSystem::swapLines(int *M, int i1, int i2)
         M[i1] = M[i2];
         M[i2] = temp;
     }
+    catch(...)
         { printf("Error in swapLines(int *M, int i1, int i2): Invalid Matrix\n"); }
 }
 
 // Finds the position of the biggest element in the row j of matrix M
 int EquationSystem::findMax(double **M, int j)
 {
+    bool error = false;
+
     // Size 0
     if (size == 0)
     {
         printf("Error in findMax(double **M, int j): size = 0\n");
-        return -1;
+        error = true;
     }
 
     // Null case
     if (M == NULL)
     {
         printf("Error in findMax(double **M, int j): M is NULL\n");
-        return -1;
+        error = true;
     }
+
+    if (error)
+        return -1;
 
     try
     {
@@ -590,7 +622,57 @@ int EquationSystem::findMax(double **M, int j)
     }
     catch (...)
     {
-        printf("Error in findMax(double **M, int j): Invalid M\n", );
+        printf("Error in findMax(double **M, int j): Invalid M\n");
         return -1;
     }
+}
+
+// Finishes the solution, multiplying P by X ( X = P*X )
+void EquationSystem::pivotX()
+{
+    bool error = false;
+
+    // Null cases
+    if (X == NULL)
+    {
+        printf("Error in pivotX(): X is NULL\n");
+        error = true;
+    }
+    if (P == NULL)
+    {
+        printf("Error in pivotX(): P is NULL\n");
+        error = true;
+    }
+
+    // Size 0
+    if (size == 0)
+    {
+        printf("Error in pivotX(): size = 0\n");
+        error = true;
+    }
+
+    if (error)
+        return;
+
+    try
+    {
+        // Result is going to be stored in Xf
+        double *Xf = new double [size];
+
+        // Calculating and storing without modify X
+        for (int i = 0; i < size; i++)
+        {
+            Xf[i] = 0;
+            for (int j = 0; j < size; j++)
+                Xf[i] += P[i][j]*X[j];
+        }
+
+        // Saving into X and deleting Xf
+        for (int i = 0; i < size; i++)
+            X[i] = Xf[i];
+
+        delete(Xf);
+    }
+    catch(...)
+        { printf("Error in pivotX(): Invalid element in P\n"); }
 }
