@@ -97,10 +97,10 @@ void LU::run()
 
     if(invalid) return;
 
-    resetX();
-    resetY();
+    if (changedA)
+        calcLU();
 
-    calcLU();
+    applyLU();
 }
 
 // Calculates L and U. They are not re-calculated when B changes.
@@ -148,7 +148,28 @@ void LU::calcLU()
 // Applies already calculated L and U to B.
 void LU::applyLU()
 {
+    resetX();
+    resetY();
 
+    // Calculating Y
+    for (int i = 0; i < size; i++)
+    {
+        Y[i] = B[i];
+        for (int j = 0; j < i; j++)
+            Y[i] -= L[i][j]*Y[j];
+
+        Y[i] /= L[i][i];
+    }
+
+    // Calculating X
+    for (int i = size-1; i >= 0; i--)
+    {
+        X[i] = Y[i];
+        for (int j = size-1; j > i; j--)
+            X[i] -= U[i][j]*X[j];
+
+        X[i] /= U[i][i];
+    }
 }
 
 /* ==============================================================
