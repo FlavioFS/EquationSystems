@@ -1,3 +1,14 @@
+/*	UNIVERSIDADE FEDERAL DO CEARA
+/	CURSO DE COMPUTACAO
+/	METODOS NUMERICOS 1
+/	PROFESSOR: JOAQUIM BENTO CAVALCANTE NETO
+/
+/	FLAVIO FREITAS DE SOUSA			344068
+/	JONAS LIMA DA SILVA				344090
+/	LIVIO DE LIMA SALES				343158
+/	PAULO BRUNO DE SOUSA SERAFIM	354086
+*/
+
 #include "lu.h"
 
 /* ==============================================================
@@ -160,14 +171,13 @@ void LU::calcLU()
 // Applies already calculated L and U to B.
 void LU::applyLU()
 {
-    if (!pivoting && sparse)
+    if (pivoting)
+        multiply(P, B);
+    else if (sparse)
         return;
 
     resetX();
     resetY();
-
-    if (pivoting)
-        multiply(P, B);
 
     // Calculating Y
     for (int i = 0; i < size; i++)

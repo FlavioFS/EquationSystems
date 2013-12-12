@@ -1,3 +1,14 @@
+/*	UNIVERSIDADE FEDERAL DO CEARA
+/	CURSO DE COMPUTACAO
+/	METODOS NUMERICOS 1
+/	PROFESSOR: JOAQUIM BENTO CAVALCANTE NETO
+/
+/	FLAVIO FREITAS DE SOUSA			344068
+/	JONAS LIMA DA SILVA				344090
+/	LIVIO DE LIMA SALES				343158
+/	PAULO BRUNO DE SOUSA SERAFIM	354086
+*/
+
 #include "EquationSystem.h"
 
 /* ==============================================================
@@ -713,7 +724,7 @@ double EquationSystem::abs(double x)
 // Multiplies the matrix M by the vector V
 void EquationSystem::multiply(int **M, double *V)
 {
-    double *Vf = new double [size];
+    double Vf[size];
 
     // Calculating new V values into Vf without modify V
     for (int i = 0; i < size; i++)
@@ -727,6 +738,4 @@ void EquationSystem::multiply(int **M, double *V)
     // Saving calculated values into V
     for (int i = 0; i < size; i++)
         V[i] = Vf[i];
-
-    delete (Vf);
 }

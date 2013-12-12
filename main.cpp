@@ -1,3 +1,14 @@
+/*	UNIVERSIDADE FEDERAL DO CEARA
+/	CURSO DE COMPUTACAO
+/	METODOS NUMERICOS 1
+/	PROFESSOR: JOAQUIM BENTO CAVALCANTE NETO
+/
+/	FLAVIO FREITAS DE SOUSA			344068
+/	JONAS LIMA DA SILVA				344090
+/	LIVIO DE LIMA SALES				343158
+/	PAULO BRUNO DE SOUSA SERAFIM	354086
+*/
+
 #include <iostream>
 #include <cstdlib>
 #include "EquationSystem.h"
@@ -14,7 +25,7 @@ int main()
         9, 8, 30
     };*/
 
-    double A2[] =
+    double H[] =
     {
         1, 1, 1,
         1, 1, -1,
@@ -22,9 +33,9 @@ int main()
     };
 
     //double B1[] = {16, 38, 38};
-    double B2[] = {6, 0, 10};
+    double V[] = {6, 0, 10};
 
-    LU s1 (A2, B2, 3, true, true);
+    LU s1 (H, V, 3, true, true);
 
     s1.showB();
     s1.showA();
