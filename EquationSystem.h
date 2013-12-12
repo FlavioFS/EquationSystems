@@ -1,6 +1,8 @@
 #ifndef EQUATIONSYSTEM_H
 #define EQUATIONSYSTEM_H
 
+#define NOMAXFOUND -1
+
 #include <cstdio>
 #include <iostream>
 
@@ -46,6 +48,7 @@ protected:
     // Façade sets
     void setP(int X[]);
     void setX(double X[]);
+    void setSparse(bool sparse);
 
     // Clears
     bool clearA();
@@ -66,6 +69,9 @@ protected:
     int findMax(double **M, int min, int j);
     void pivotX();
 
+    // Utility
+    void multiply(int **M, double *V);
+
 	// A*X = B
 	double
         **A,    // Coeficients
@@ -78,7 +84,8 @@ protected:
 
 	bool
         printable,  // Toggles visibility of method private calculations
-        pivoting;   // Toggles pivoting (better results, but slower)
+        pivoting,   // Toggles pivoting (better results, but slower)
+        sparse;     // Is this system sparse?
 };
 
 #endif

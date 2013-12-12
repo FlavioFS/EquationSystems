@@ -79,19 +79,19 @@ void LU::run()
 
     if (A == NULL)
     {
-        printf("Error in run(): A is NULL\n");
+        printf(" Error in run(): A is NULL\n");
         invalid = true;
     }
 
     if (B == NULL)
     {
-        printf("Error in run(): B is NULL\n");
+        printf(" Error in run(): B is NULL\n");
         invalid = true;
     }
 
     if (size == 0)
     {
-        printf("Error in run(): size = 0\n");
+        printf(" Error in run(): size = 0\n");
         invalid = true;
     }
 
@@ -114,7 +114,20 @@ void LU::calcLU()
         if (pivoting)
         {
             int max = findMax(A, step, step);
-            swapLines(A, step, max);
+
+            if (max != NOMAXFOUND)
+            {
+                swapLines(A, step, max);
+                swapLines(P, step, max);
+            }
+        }
+        else if(A[step][step] == 0)
+        {
+            setSparse(true);
+            printf(" This system leads to a sparse matrix.\n"
+                   " Therefore, it cannot be solved without pivoting.\n"
+                   " Please activate pivoting in order to solve it.\n\n");
+            return;
         }
 
         // Calculating U
@@ -147,8 +160,13 @@ void LU::calcLU()
 // Applies already calculated L and U to B.
 void LU::applyLU()
 {
+    if (!pivoting && sparse)
+        return;
+
     resetX();
     resetY();
+
+    multiply(P, B);
 
     // Calculating Y
     for (int i = 0; i < size; i++)
@@ -277,7 +295,7 @@ bool LU::clearL()
         // Size 0
         if (size == 0)
         {
-            printf("Error in clearL(): size = 0.\n");
+            printf(" Error in clearL(): size = 0.\n");
             return false;
         }
 
@@ -300,7 +318,7 @@ bool LU::clearU()
         // Size 0
         if (size == 0)
         {
-            printf("Error in clearU(): size = 0.\n");
+            printf(" Error in clearU(): size = 0.\n");
             return false;
         }
 
@@ -323,7 +341,7 @@ bool LU::clearY()
         // Size 0
         if (size == 0)
         {
-            printf("Error in clearY(): size = 0.\n");
+            printf(" Error in clearY(): size = 0.\n");
             return false;
         }
 
@@ -386,5 +404,3 @@ void LU::resetY()
     for (int i = 0; i < size; i++)
         Y[i] = 0;
 }
-
-

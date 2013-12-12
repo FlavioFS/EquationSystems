@@ -60,7 +60,7 @@ void EquationSystem::setA(double A[])
         // Fail clear
         if (!clearA())
         {
-            printf("Error in setA(double A[]): size == 0\n");
+            printf(" Error in setA(double A[]): size == 0\n");
             return;
         }
 
@@ -82,7 +82,7 @@ void EquationSystem::setA(double A[])
                 this->A[i][j] = A[i*size + j];
         }
     }
-    catch(...) { printf("Error in setA(double A[]): invalid A (coeficients).\n"); };
+    catch(...) { printf(" Error in setA(double A[]): invalid A (coeficients).\n"); };
 }
 
 // Sets matrix B in this A*X = B system
@@ -93,7 +93,7 @@ void EquationSystem::setB(double B[])
         // Fail clear
         if (!clearB())
         {
-            printf("Error in setB(double A[]): size == 0\n");
+            printf(" Error in setB(double A[]): size == 0\n");
             return;
         }
 
@@ -110,7 +110,7 @@ void EquationSystem::setB(double B[])
         for (int i = 0; i < size; i++)
             this->B[i] = B[i];
     }
-    catch(...) { printf("Error in setB(double B[]): invalid B (constants vector).\n"); };
+    catch(...) { printf(" Error in setB(double B[]): invalid B (constants vector).\n"); };
 }
 
 // Sets matrix X in this A*X = B system
@@ -121,7 +121,7 @@ void EquationSystem::setX(double X[])
         // Fail clear
         if (!clearX())
         {
-            printf("Error in setX(double X[]): size == 0\n");
+            printf(" Error in setX(double X[]): size == 0\n");
             return;
         }
 
@@ -138,7 +138,7 @@ void EquationSystem::setX(double X[])
         for (int i = 0; i < size; i++)
             this->X[i] = X[i];
     }
-    catch(...) { printf("Error in setX(double X[]): invalid X (solutions).\n"); };
+    catch(...) { printf(" Error in setX(double X[]): invalid X (solutions).\n"); };
 }
 
 // Sets pivoting matrix P (Facade)
@@ -149,7 +149,7 @@ void EquationSystem::setP(int P[])
         // Fail clear
         if (!clearP())
         {
-            printf("Error in setP(double P[]): size == 0\n");
+            printf(" Error in setP(double P[]): size == 0\n");
             return;
         }
 
@@ -171,7 +171,7 @@ void EquationSystem::setP(int P[])
                 this->P[i][j] = P[i*size + j];
         }
     }
-    catch(...) { printf("Error in setP(int P[]): invalid P (pivoting).\n"); };
+    catch(...) { printf(" Error in setP(int P[]): invalid P (pivoting).\n"); };
 }
 
 /* Sets the size of A, B and X. Sets the n in:
@@ -196,6 +196,10 @@ void EquationSystem::setPrintCalcs(bool printable)
  */
 void EquationSystem::setPivoting(bool pivoting)
 	{ this->pivoting = pivoting; }
+
+// States that A is sparse
+void EquationSystem::setSparse(bool pivoting)
+    { this->sparse = sparse; }
 
 /* ==============================================================
  *                 			   Show				               *
@@ -322,7 +326,7 @@ bool EquationSystem::clearA()
         // Size 0
         if (size == 0)
         {
-            printf("Error in clearA(): size = 0.\n");
+            printf(" Error in clearA(): size = 0.\n");
             return false;
         }
 
@@ -345,7 +349,7 @@ bool EquationSystem::clearB()
         // Size 0
         if (size == 0)
         {
-            printf("Error in clearB(): size = 0.\n");
+            printf(" Error in clearB(): size = 0.\n");
             return false;
         }
 
@@ -364,7 +368,7 @@ bool EquationSystem::clearX()
         // Size 0
         if (size == 0)
         {
-            printf("Error in clearX(): size = 0.\n");
+            printf(" Error in clearX(): size = 0.\n");
             return false;
         }
 
@@ -383,7 +387,7 @@ bool EquationSystem::clearP()
         // Size 0
         if (size == 0)
         {
-            printf("Error in clearP(): size = 0.\n");
+            printf(" Error in clearP(): size = 0.\n");
             return false;
         }
 
@@ -448,7 +452,7 @@ void EquationSystem::swapLines(double **M, int i1, int i2)
     // Null case
     if (M == NULL)
     {
-        printf("Error in swapLines(double **M, int i1, int i2): NULL matrix\n");
+        printf(" Error in swapLines(double **M, int i1, int i2): NULL matrix\n");
         error = true;
     }
 
@@ -458,7 +462,7 @@ void EquationSystem::swapLines(double **M, int i1, int i2)
         i1 > size ||
         i2 > size)
     {
-        printf("Error in swapLines(double **M, int i1, int i2): Line value error\n");
+        printf(" Error in swapLines(double **M, int i1, int i2): Line value error\n");
         error = true;
     }
 
@@ -478,7 +482,7 @@ void EquationSystem::swapLines(double **M, int i1, int i2)
         }
     }
     catch (...)
-        { printf("Error in swapLines(double **M, int i1, int i2): Invalid Matrix\n"); }
+        { printf(" Error in swapLines(double **M, int i1, int i2): Invalid Matrix\n"); }
 }
 
 void EquationSystem::swapLines(int **M, int i1, int i2)
@@ -488,7 +492,7 @@ void EquationSystem::swapLines(int **M, int i1, int i2)
     // Null case
     if (M == NULL)
     {
-        printf("Error in swapLines(int **M, int i1, int i2): NULL matrix\n");
+        printf(" Error in swapLines(int **M, int i1, int i2): NULL matrix\n");
         error = true;
     }
 
@@ -498,7 +502,7 @@ void EquationSystem::swapLines(int **M, int i1, int i2)
         i1 > size ||
         i2 > size)
     {
-        printf("Error in swapLines(int **M, int i1, int i2): Line value error\n");
+        printf(" Error in swapLines(int **M, int i1, int i2): Line value error\n");
         error = true;
     }
 
@@ -518,7 +522,7 @@ void EquationSystem::swapLines(int **M, int i1, int i2)
         }
     }
     catch (...)
-        { printf("Error in swapLines(int **M, int i1, int i2): Invalid Matrix\n"); }
+        { printf(" Error in swapLines(int **M, int i1, int i2): Invalid Matrix\n"); }
 }
 
 void EquationSystem::swapLines(double *M, int i1, int i2)
@@ -528,7 +532,7 @@ void EquationSystem::swapLines(double *M, int i1, int i2)
     // Null case
     if (M == NULL)
     {
-        printf("Error in swapLines(double *M, int i1, int i2): NULL matrix\n");
+        printf(" Error in swapLines(double *M, int i1, int i2): NULL matrix\n");
         error = true;
     }
 
@@ -538,7 +542,7 @@ void EquationSystem::swapLines(double *M, int i1, int i2)
         i1 > size ||
         i2 > size)
     {
-        printf("Error in swapLines(double *M, int i1, int i2): Line value error\n");
+        printf(" Error in swapLines(double *M, int i1, int i2): Line value error\n");
         error = true;
     }
 
@@ -555,7 +559,7 @@ void EquationSystem::swapLines(double *M, int i1, int i2)
         M[i2] = temp;
     }
     catch(...)
-        { printf("Error in swapLines(double *M, int i1, int i2): Invalid Matrix\n"); }
+        { printf(" Error in swapLines(double *M, int i1, int i2): Invalid Matrix\n"); }
 }
 
 void EquationSystem::swapLines(int *M, int i1, int i2)
@@ -565,7 +569,7 @@ void EquationSystem::swapLines(int *M, int i1, int i2)
     // Null case
     if (M == NULL)
     {
-        printf("Error in swapLines(int *M, int i1, int i2): NULL matrix\n");
+        printf(" Error in swapLines(int *M, int i1, int i2): NULL matrix\n");
         error = true;
     }
 
@@ -575,7 +579,7 @@ void EquationSystem::swapLines(int *M, int i1, int i2)
         i1 > size ||
         i2 > size)
     {
-        printf("Error in swapLines(int *M, int i1, int i2): Line value error\n");
+        printf(" Error in swapLines(int *M, int i1, int i2): Line value error\n");
         error = true;
     }
 
@@ -592,10 +596,12 @@ void EquationSystem::swapLines(int *M, int i1, int i2)
         M[i2] = temp;
     }
     catch(...)
-        { printf("Error in swapLines(int *M, int i1, int i2): Invalid Matrix\n"); }
+        { printf(" Error in swapLines(int *M, int i1, int i2): Invalid Matrix\n"); }
 }
 
-// Finds the position of the biggest element in the row j of matrix M
+/* Finds the position of the biggest element in the row j of matrix M
+ * starting from line min.
+ */
 int EquationSystem::findMax(double **M, int min, int j)
 {
     bool error = false;
@@ -603,24 +609,29 @@ int EquationSystem::findMax(double **M, int min, int j)
     // Size 0
     if (size == 0)
     {
-        printf("Error in findMax(double **M, int j): size = 0\n");
+        printf(" Error in findMax(double **M, int min, int j): size = 0\n");
         error = true;
     }
 
     // Null case
     if (M == NULL)
     {
-        printf("Error in findMax(double **M, int j): M is NULL\n");
+        printf(" Error in findMax(double **M, int min, int j): M is NULL\n");
         error = true;
     }
 
-    if (error)
-        return -1;
+    if (error ||
+        min < 0 ||
+        min >= size ||
+        j < 0 ||
+        j >= size)
+        return NOMAXFOUND;
 
     try
     {
-        double maxV = abs(M[0][j]);
-        int maxI = 0;
+        double maxV = abs(M[min][j]);
+        int maxI = min;
+
         for (int i = min; i < size; i++)
         {
             if (abs(M[i][j]) > maxV && M[i][j] != 0)
@@ -634,8 +645,8 @@ int EquationSystem::findMax(double **M, int min, int j)
     }
     catch (...)
     {
-        printf("Error in findMax(double **M, int j): Invalid M\n");
-        return -1;
+        printf(" Error in findMax(double **M, int j): Invalid M\n");
+        return NOMAXFOUND;
     }
 }
 
@@ -647,19 +658,19 @@ void EquationSystem::pivotX()
     // Null cases
     if (X == NULL)
     {
-        printf("Error in pivotX(): X is NULL\n");
+        printf(" Error in pivotX(): X is NULL\n");
         error = true;
     }
     if (P == NULL)
     {
-        printf("Error in pivotX(): P is NULL\n");
+        printf(" Error in pivotX(): P is NULL\n");
         error = true;
     }
 
     // Size 0
     if (size == 0)
     {
-        printf("Error in pivotX(): size = 0\n");
+        printf(" Error in pivotX(): size = 0\n");
         error = true;
     }
 
@@ -686,7 +697,7 @@ void EquationSystem::pivotX()
         delete(Xf);
     }
     catch(...)
-        { printf("Error in pivotX(): Invalid element in P\n"); }
+        { printf(" Error in pivotX(): Invalid element in P\n"); }
 }
 
 /* ==============================================================
@@ -697,4 +708,25 @@ double EquationSystem::abs(double x)
     if (x < 0)
         return -x;
     return x;
+}
+
+// Multiplies the matrix M by the vector V
+void EquationSystem::multiply(int **M, double *V)
+{
+    double *Vf = new double [size];
+
+    // Calculating new V values into Vf without modify V
+    for (int i = 0; i < size; i++)
+    {
+        Vf[i] = 0;
+
+        for (int j = 0; j < size; j++)
+            Vf[i] += M[i][j]*V[j];
+    }
+
+    // Saving calculated values into V
+    for (int i = 0; i < size; i++)
+        V[i] = Vf[i];
+
+    delete (Vf);
 }
